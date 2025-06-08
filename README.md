@@ -1,3 +1,9 @@
+# OpenAPI output:
+build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml
+### UI:
+localhost:8080/swagger-ui
+
+
 ## Micronaut 4.8.2 Documentation
 
 - [User Guide](https://docs.micronaut.io/4.8.2/guide/index.html)
