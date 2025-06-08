@@ -1,18 +1,27 @@
 package com.sandbox.aws
 
+import com.sandbox.controller.BucketController
 import io.micronaut.http.multipart.CompletedFileUpload
 import jakarta.inject.Singleton
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.s3.model.Delete
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest
+import software.amazon.awssdk.services.s3.model.DeleteObjectsRequest
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.GetObjectResponse
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
+import software.amazon.awssdk.services.s3.model.ObjectIdentifier
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.nio.file.Path
 import kotlin.io.path.Path
 
 @Singleton
 class S3Service(private val s3: S3Client) {
+
+    private val log: Logger = LoggerFactory.getLogger(S3Service::class.java)
 
     val bucketName = "test-bucket-ace69d39-97c8-485a-9a87-b34964a83ca8"
 
@@ -44,4 +53,39 @@ class S3Service(private val s3: S3Client) {
 
     }
 
+    fun deleteFile(key: String) {
+        try {
+            val deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build()
+            s3.deleteObject(deleteObjectRequest)
+        } catch (e: Exception) {
+            throw RuntimeException("Failed to delete file: $key", e)
+        }
+    }
+
+    fun deleteFolder(path: String) {
+        try {
+            val listObjectsRequest = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(path)
+                .delimiter("/")
+                .build()
+            val contents = s3.listObjectsV2(listObjectsRequest).contents()
+
+            val objectIdentifiers = contents.map {
+                log.info("Deleting file: {}", it.key())
+                ObjectIdentifier.builder().key(it.key()).build()
+            }
+
+            val deleteObjectsRequest = DeleteObjectsRequest.builder()
+                .bucket(bucketName)
+                .delete(Delete.builder().objects(objectIdentifiers).build())
+                .build()
+            s3.deleteObjects(deleteObjectsRequest)
+        } catch (e: Exception) {
+            throw RuntimeException("Failed to delete folder: $path", e)
+        }
+    }
 }

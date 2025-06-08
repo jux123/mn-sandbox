@@ -4,6 +4,7 @@ import com.sandbox.aws.S3Service
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Delete
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.multipart.CompletedFileUpload
@@ -35,5 +36,19 @@ class BucketController(private val s3service: S3Service) {
         val fileName = filePath.substringAfterLast('/')
         return HttpResponse.ok(byteArray)
             .header("Content-Disposition", "attachment; filename=\"$fileName\"")
+    }
+
+    @Delete("/file/{filePath}")
+    fun deleteFile(@Schema(defaultValue = "docs/123/example.txt") filePath: String): String {
+        log.info("Deleting file: {}", filePath)
+        s3service.deleteFile(filePath)
+        return "File deleted successfully"
+    }
+
+    @Delete("/folder/{path}")
+    fun deleteFolder(@Schema(defaultValue = "docs/123/") path: String): String {
+        log.info("Deleting folder: {}", path)
+        s3service.deleteFolder(path)
+        return "Folder deleted successfully"
     }
 }
