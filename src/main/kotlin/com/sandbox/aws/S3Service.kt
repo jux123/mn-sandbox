@@ -1,11 +1,15 @@
 package com.sandbox.aws
 
+import io.micronaut.http.multipart.CompletedFileUpload
 import jakarta.inject.Singleton
+import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
+import software.amazon.awssdk.services.s3.model.GetObjectResponse
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.nio.file.Path
+import kotlin.io.path.Path
 
 @Singleton
 class S3Service(private val s3: S3Client) {
@@ -21,20 +25,23 @@ class S3Service(private val s3: S3Client) {
         return s3.listObjectsV2(listObjectsRequest).contents().map { it.key() }
     }
 
-     fun uploadObject(bucket: String, key: String, filePath: Path) {
+     fun uploadObject(path: String, file: CompletedFileUpload) {
         val putRequest = PutObjectRequest.builder()
-            .bucket(bucket)
-            .key(key)
+            .bucket(bucketName)
+            .key(path + file.filename)
             .build()
-        s3.putObject(putRequest, filePath)
+         val requestBody = RequestBody.fromBytes(file.bytes)
+        s3.putObject(putRequest, requestBody)
     }
 
-    fun downloadObject(bucket: String, key: String, destination: Path) {
+    fun downloadObject(key: String): ByteArray {
         val getRequest = GetObjectRequest.builder()
-            .bucket(bucket)
+            .bucket(bucketName)
             .key(key)
             .build()
-        s3.getObject(getRequest, destination)
+        val objectAsBytes = s3.getObjectAsBytes(getRequest)
+        return objectAsBytes.asByteArray()
+
     }
 
 }
