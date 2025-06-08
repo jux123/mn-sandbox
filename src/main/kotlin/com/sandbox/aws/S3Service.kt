@@ -1,22 +1,12 @@
 package com.sandbox.aws
 
-import com.sandbox.controller.BucketController
 import io.micronaut.http.multipart.CompletedFileUpload
 import jakarta.inject.Singleton
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
-import software.amazon.awssdk.services.s3.model.Delete
-import software.amazon.awssdk.services.s3.model.DeleteObjectRequest
-import software.amazon.awssdk.services.s3.model.DeleteObjectsRequest
-import software.amazon.awssdk.services.s3.model.GetObjectRequest
-import software.amazon.awssdk.services.s3.model.GetObjectResponse
-import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
-import software.amazon.awssdk.services.s3.model.ObjectIdentifier
-import software.amazon.awssdk.services.s3.model.PutObjectRequest
-import java.nio.file.Path
-import kotlin.io.path.Path
+import software.amazon.awssdk.services.s3.model.*
 
 @Singleton
 class S3Service(private val s3: S3Client) {
