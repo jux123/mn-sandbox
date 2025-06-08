@@ -1,7 +1,23 @@
-# OpenAPI output:
+## OpenAPI output:
 build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml
 ### UI:
 localhost:8080/swagger-ui
+
+
+## AWS SDK integration
+
+### AWS region is set up in props
+```
+aws:
+  region: eu-north-1
+```
+
+### Set AWS access keys to env before starting app
+```declarative
+export AWS_ACCESS_KEY_ID="ASIA4LQCO..."
+export AWS_SECRET_ACCESS_KEY="0/Ao/PqR..."
+export AWS_SESSION_TOKEN="IQoJb3..."
+```
 
 
 ## Micronaut 4.8.2 Documentation

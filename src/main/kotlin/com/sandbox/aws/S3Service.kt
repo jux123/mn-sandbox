@@ -12,10 +12,10 @@ class S3Service(private val s3: S3Client) {
 
     val bucketName = "test-bucket-ace69d39-97c8-485a-9a87-b34964a83ca8"
 
-    fun listFiles(): List<String> {
+    fun listFiles(path: String): List<String> {
         val listObjectsRequest = ListObjectsV2Request.builder()
             .bucket(bucketName)
-            .prefix("docs/")
+            .prefix(path)
             .delimiter("/")
             .build()
         return s3.listObjectsV2(listObjectsRequest).contents().map { it.key() }
