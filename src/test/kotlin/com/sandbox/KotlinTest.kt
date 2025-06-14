@@ -11,9 +11,6 @@ class KotlinTest : StringSpec({
 
         val groupByWithO = set.groupBy { it.contains('o') } //Map<Boolean, List<String>> LinkedHashMap
 
-//        println("Elements with 'o': $groupByWithO")
-//        println("Class: ${groupByWithO.javaClass.simpleName}")
-
         groupByWithO.forEach { (key, value) -> {
             println("Foreach: Group with 'o' in name: $key, elements: $value")
         }}
@@ -21,6 +18,44 @@ class KotlinTest : StringSpec({
         for ((key, value) in groupByWithO) {
             println("For: Group with 'o' in name: $key, elements: $value")
         }
+    }
+
+    "test higher order function" {
+        val numbers = listOf(1, 2, 3, 4, 5)
+
+
+        fun calcList(numbers: List<Int>, a: Int, fx: (Int, Int) -> Int): List<Int> {
+            val result: MutableList<Int>  = mutableListOf()
+            for (number in numbers) {
+                result.add(fx(number, a))
+            }
+            return result
+        }
+
+        val newNumbers = calcList(numbers, 3) { number, a -> number * a }
+
+        println("Old numbers: $numbers")
+        println("New numbers: $newNumbers")
+    }
+
+    "test higher order function second" {
+        val numbers = listOf(1, 2, 3, 4, 5)
+
+
+        fun calcList(numbers: List<Int>, a: Int, fx: (Int, Int) -> Int): List<Int> {
+            val result: MutableList<Int>  = mutableListOf()
+            for (number in numbers) {
+                result.add(fx(number, a))
+            }
+            return result
+        }
+
+        fun multiply(number: Int, a: Int): Int { return number * a }
+
+        val newNumbers = calcList(numbers, 3, ::multiply)
+
+        println("Old numbers: $numbers")
+        println("New numbers: $newNumbers")
     }
 
 })
