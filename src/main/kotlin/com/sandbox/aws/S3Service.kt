@@ -78,4 +78,17 @@ class S3Service(private val s3: S3Client) {
             throw RuntimeException("Failed to delete folder: $path", e)
         }
     }
+
+    fun listFolders(path: String): List<String> {
+        val listDirectoryBucketsRequest = ListDirectoryBucketsRequest.builder().build()
+        return s3.listDirectoryBuckets(listDirectoryBucketsRequest).buckets().map { it.name() }
+    }
+
+    fun listMultiPartUploads(path: String): List<String> {
+        val listMultipartUploadsRequest = ListMultipartUploadsRequest.builder()
+            .bucket(bucketName)
+            .prefix(path)
+           .build()
+        return s3.listMultipartUploads(listMultipartUploadsRequest).uploads().map { it.key() }
+    }
 }

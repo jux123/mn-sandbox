@@ -10,15 +10,5 @@ micronaut:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
 
-#aws:
-#  s3:
-#    enabled: true
-#    region: eu-north-1
-#    accessKey: YOUR_ACCESS_KEY
-#    secretKey: YOUR_SECRET_KEY
-
 aws:
   region: eu-north-1
-#  credentials:
-#    access-key-id: YOUR_KEY
-#    secret-access-key: YOUR_SECRET

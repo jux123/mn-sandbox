@@ -22,6 +22,16 @@ class BucketController(private val s3service: S3Service) {
         return s3service.listFiles(path)
     }
 
+    @Get("/folders", produces = ["application/json"])
+    fun listFolderBuckets(@Schema(defaultValue = "docs/123/") path: String): List<String> {
+        return s3service.listFolders(path)
+    }
+
+    @Get("/multipartUploads", produces = ["application/json"])
+    fun listMultiPartUploads(@Schema(defaultValue = "docs/123/") path: String): List<String> {
+        return s3service.listMultiPartUploads(path)
+    }
+
     @Post(value = "/", consumes = [MediaType.MULTIPART_FORM_DATA], produces = [MediaType.TEXT_PLAIN])
     fun putFile(@Schema(defaultValue = "docs/123/") path: String, file: CompletedFileUpload): String {
 
