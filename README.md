@@ -1,3 +1,25 @@
+## Run app
+### Gradle run
+`./gradlew run`
+### Build jar
+`./gradlew assemble`
+
+`java -jar build/libs/mn-sandbox-0.1-all.jar`
+
+### Run in container:
+`./gradlew clean dockerBuild`
+
+`docker run -p 8080:8080 mn-sandbox:latest`
+
+URL is http://localhost:8080/hello
+
+## Gradle versions plugin -- bugs
+Plugin:
+`id("com.github.ben-manes.versions") version "0.52.0"`
+
+Command:
+`./gradlew dependencyUpdates -Drevision=release`
+
 ## OpenAPI output:
 build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml
 ### UI:

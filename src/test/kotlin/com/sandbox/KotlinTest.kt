@@ -3,6 +3,7 @@ package com.sandbox
 import io.kotest.core.spec.style.StringSpec
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import kotlinx.coroutines.delay
+import org.slf4j.LoggerFactory
 
 @MicronautTest
 class KotlinTest : StringSpec({
@@ -13,11 +14,11 @@ class KotlinTest : StringSpec({
         val groupByWithO = set.groupBy { it.contains('o') } //Map<Boolean, List<String>> LinkedHashMap
 
         groupByWithO.forEach { (key, value) -> {
-            println("Foreach: Group with 'o' in name: $key, elements: $value")
+            log.info("Foreach: Group with 'o' in name: $key, elements: $value")
         }}
 
         for ((key, value) in groupByWithO) {
-            println("For: Group with 'o' in name: $key, elements: $value")
+            log.info("For: Group with 'o' in name: $key, elements: $value")
         }
     }
 
@@ -35,8 +36,8 @@ class KotlinTest : StringSpec({
 
         val newNumbers = calcList(numbers, 3) { number, a -> number * a }
 
-        println("Old numbers: $numbers")
-        println("New numbers: $newNumbers")
+        log.info("Old numbers: $numbers")
+        log.info("New numbers: $newNumbers")
     }
 
     "test higher order function second" {
@@ -55,22 +56,24 @@ class KotlinTest : StringSpec({
 
         val newNumbers = calcList(numbers, 3, ::multiply)
 
-        println("Old numbers: $numbers")
-        println("New numbers: $newNumbers")
+        log.info("Old numbers: $numbers")
+        log.info("New numbers: $newNumbers")
     }
 
     "test coroutine: default" {
         // Kotest tests automatically run in coroutine blocking context
         doSomething()
-        println("Test finished!")
+        log.info("Test finished!")
     }
 }) {
     companion object {
 
+        val log = LoggerFactory.getLogger(KotlinTest::class.java)!!
+
         suspend fun doSomething() {
-            println("Starting task...")
+            log.info("Starting task...")
             delay(1000)
-            println("Task done!")
+            log.info("Task done!")
         }
     }
 }
