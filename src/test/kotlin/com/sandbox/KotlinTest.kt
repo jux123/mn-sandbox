@@ -2,6 +2,7 @@ package com.sandbox
 
 import io.kotest.core.spec.style.StringSpec
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import kotlinx.coroutines.delay
 
 @MicronautTest
 class KotlinTest : StringSpec({
@@ -58,4 +59,18 @@ class KotlinTest : StringSpec({
         println("New numbers: $newNumbers")
     }
 
-})
+    "test coroutine: default" {
+        // Kotest tests automatically run in coroutine blocking context
+        doSomething()
+        println("Test finished!")
+    }
+}) {
+    companion object {
+
+        suspend fun doSomething() {
+            println("Starting task...")
+            delay(1000)
+            println("Task done!")
+        }
+    }
+}
