@@ -38,6 +38,11 @@ Updates the OpenAPI stored files
 ./gradlew openApiUpdate
 ```
 
+Alternative custom diff:
+```
+./gradlew openApiDiff
+```
+
 
 
 ## AWS SDK integration

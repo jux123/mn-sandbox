@@ -108,6 +108,25 @@ tasks.register("openApiUpdate") {
     }
 }
 
+tasks.register("openApiDiff") {
+    doLast {
+        val newFilesPath = "build/generated/ksp/main/resources/META-INF/swagger/"
+        val existingFilesPath = "dist/swagger/"
+        val filePath1 = Paths.get(newFilesPath, "sandbox-0.1.yml")
+        val filePath2 = Paths.get(existingFilesPath, "sandbox-0.1.yml")
+        val file1 = Files.readAllLines(filePath1)
+        val file2 = Files.readAllLines(filePath2)
+
+        file1.forEachIndexed { index, line ->
+            if (!file2.contains(line)) {
+                println("Difference found in file: ${filePath1.fileName}")
+                println("Line ${index + 1}: $line")
+                throw GradleException("OpenAPI files differ")
+            }
+        }
+    }
+}
+
 openapi_diff {
     originalFile = "dist/swagger/sandbox-0.1.yml"
     newFile = "build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml"

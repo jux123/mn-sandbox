@@ -11,7 +11,7 @@ paths:
           multipart/form-data:
             schema:
               required:
-              - file
+              - file3
               - path
               type: object
               properties:
