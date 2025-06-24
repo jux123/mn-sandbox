@@ -26,6 +26,20 @@ build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml
 localhost:8080/swagger-ui
 
 
+## OpenAPI diff:
+Plugin: `com.x3t.gradle.plugins.openapi.openapi_diff` 
+
+Checks the diff, is made part of build
+```
+./gradle openapi_diff
+```
+Updates the OpenAPI stored files
+```
+./gradlew openApiUpdate
+```
+
+
+
 ## AWS SDK integration
 
 ### AWS region is set up in props

@@ -1,0 +1,156 @@
+openapi: 3.0.1
+info:
+  title: sandbox
+  version: "0.1"
+paths:
+  /bucket:
+    post:
+      operationId: putFile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - file
+              - path
+              type: object
+              properties:
+                path:
+                  type: string
+                  default: docs/123/
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              path:
+                contentType: application/octet-stream
+              file:
+                contentType: application/octet-stream
+        required: true
+      responses:
+        "200":
+          description: putFile 200 response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /bucket/file/{filePath}:
+    get:
+      operationId: getFile
+      parameters:
+      - name: filePath
+        in: path
+        required: true
+        schema:
+          type: string
+          default: docs/123/example.txt
+      responses:
+        "200":
+          description: getFile 200 response
+          content:
+            application/octet-stream:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+    delete:
+      operationId: deleteFile
+      parameters:
+      - name: filePath
+        in: path
+        required: true
+        schema:
+          type: string
+          default: docs/123/example.txt
+      responses:
+        "200":
+          description: deleteFile 200 response
+          content:
+            application/json:
+              schema:
+                type: string
+  /bucket/folder/{path}:
+    delete:
+      operationId: deleteFolder
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+          default: docs/123/
+      responses:
+        "200":
+          description: deleteFolder 200 response
+          content:
+            application/json:
+              schema:
+                type: string
+  /bucket/folders:
+    get:
+      operationId: listFolderBuckets
+      parameters:
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+          default: docs/123/
+      responses:
+        "200":
+          description: listFolderBuckets 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /bucket/list:
+    get:
+      operationId: listFiles
+      parameters:
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+          default: docs/123/
+      responses:
+        "200":
+          description: listFiles 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /bucket/multipartUploads:
+    get:
+      operationId: listMultiPartUploads
+      parameters:
+      - name: path
+        in: query
+        required: true
+        schema:
+          type: string
+          default: docs/123/
+      responses:
+        "200":
+          description: listMultiPartUploads 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /hello:
+    get:
+      operationId: hello
+      responses:
+        "200":
+          description: hello 200 response
+          content:
+            text/plain:
+              schema:
+                type: string

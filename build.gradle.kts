@@ -1,3 +1,7 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.9.25"
@@ -5,6 +9,7 @@ plugins {
     id("io.micronaut.application") version "4.5.3"
     id("io.micronaut.aot") version "4.5.3"
     id("com.gradleup.shadow") version "8.3.6"
+    id("com.x3t.gradle.plugins.openapi.openapi_diff") version "1.1.0"
     //id("com.github.ben-manes.versions") version "0.52.0"
 }
 
@@ -80,4 +85,36 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
     jdkVersion = "21"
 }
 
+tasks.register("openApiUpdate") {
+    doLast {
+        val newFilesPath = "build/generated/ksp/main/resources/META-INF/swagger/"
+        val existingFilesPath = "dist/swagger/"
 
+        val newFiles = fileTree(newFilesPath) {
+            include("*.yml")
+        }
+        // val existingFiles = fileTree(existingFilesPath) {
+        //     include("*.yml")
+        // }
+        newFiles.forEach {
+            println("Copying OpenAPI file: ${it.name}")
+            Files.copy(
+                Paths.get(newFilesPath, it.name),
+                Paths.get(existingFilesPath, it.name),
+                StandardCopyOption.REPLACE_EXISTING
+            )
+        }
+        
+    }
+}
+
+openapi_diff {
+    originalFile = "dist/swagger/sandbox-0.1.yml"
+    newFile = "build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml"
+    failOnChange = true
+    textReport = true
+}
+
+tasks.named("build") {
+    dependsOn("openapi_diff")
+}
