@@ -1,4 +1,4 @@
-package com.sandbox.aws
+package com.sandbox.service
 
 import io.micronaut.http.multipart.CompletedFileUpload
 import jakarta.inject.Singleton

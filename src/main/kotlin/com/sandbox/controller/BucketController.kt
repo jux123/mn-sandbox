@@ -1,6 +1,6 @@
 package com.sandbox.controller
 
-import com.sandbox.aws.S3Service
+import com.sandbox.service.S3Service
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller

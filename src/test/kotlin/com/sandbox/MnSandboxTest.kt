@@ -9,14 +9,14 @@ import io.micronaut.http.client.annotation.Client
 @MicronautTest
 class MnSandboxTest(
     private val application: EmbeddedApplication<*>,
-    @Client("/") private val httpClient: HttpClient
+    @Client("/api") private val httpClient: HttpClient
     ): StringSpec({
 
     "test the server is running" {
         assert(application.isRunning)
     }
 
-    "test /hello endpoint" {
+    "test /api/hello endpoint" {
         val response = httpClient.toBlocking().retrieve("/hello")
         response shouldBe "Hello world"
     }

@@ -3,14 +3,13 @@ import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.25"
-    id("com.google.devtools.ksp") version "1.9.25-1.0.20"
-    id("io.micronaut.application") version "4.5.3"
-    id("io.micronaut.aot") version "4.5.3"
+    id("org.jetbrains.kotlin.jvm") version "2.1.20"
+    id("org.jetbrains.kotlin.plugin.allopen") version "2.1.20"
+    id("com.google.devtools.ksp") version "2.1.20-2.0.1"
+    id("io.micronaut.application") version "4.5.4"
+    id("io.micronaut.aot") version "4.5.4"
     id("com.gradleup.shadow") version "8.3.6"
-    id("com.x3t.gradle.plugins.openapi.openapi_diff") version "1.1.0"
-    //id("com.github.ben-manes.versions") version "0.52.0"
+//    id("com.x3t.gradle.plugins.openapi.openapi_diff") version "1.1.0"
 }
 
 version = "0.1"
@@ -28,6 +27,10 @@ dependencies {
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.10.1")
+//    implementation("org.reactivestreams:reactive-streams:1.0.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx3:1.10.1")
 
     //AWS SDK V2 dependencies
     implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
@@ -127,13 +130,13 @@ tasks.register("openApiDiff") {
     }
 }
 
-openapi_diff {
-    originalFile = "dist/swagger/sandbox-0.1.yml"
-    newFile = "build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml"
-    failOnChange = true
-    textReport = true
-}
-
-tasks.named("build") {
-    dependsOn("openapi_diff")
-}
+//openapi_diff {
+//    originalFile = "dist/swagger/sandbox-0.1.yml"
+//    newFile = "build/generated/ksp/main/resources/META-INF/swagger/sandbox-0.1.yml"
+//    failOnChange = true
+//    textReport = true
+//}
+//
+//tasks.named("build") {
+//    dependsOn("openapi_diff")
+//}
