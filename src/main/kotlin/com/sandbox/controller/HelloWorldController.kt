@@ -14,16 +14,16 @@ open class HelloWorldController(
 
     private val log: Logger = LoggerFactory.getLogger(HelloWorldController::class.java)
 
-    @Get("/hello", produces = [MediaType.TEXT_PLAIN])
+    @Get(value ="/hello", produces = [MediaType.TEXT_PLAIN])
     fun hello(): String {
         log.info("Hello, World!")
         return "Hello world"
     }
-
-    @Get("/call", produces = [MediaType.TEXT_PLAIN])
-    suspend fun apiCall(url: String): String {
-
-        return apiClient.makeCall(url)
-    }
+//
+//    @Get("/call/{url}", produces = [MediaType.TEXT_PLAIN])
+//    suspend fun apiCall(url: String): String {
+//
+//        return apiClient.makeCall(url)
+//    }
 
 }

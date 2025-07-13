@@ -96,3 +96,8 @@ export AWS_SESSION_TOKEN="IQoJb3..."
 - [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
 
 
+## Problems upgradeing to Micronaut 4.9.0
+
+`@GET("/test")` annotation does not get mapped to this sub-path in routing.
+
+Debug in `/micronaut-router-4.9.5-sources.jar!/io/micronaut/web/router/DefaultRouter.java:708` to see the routes.

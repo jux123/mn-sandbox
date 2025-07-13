@@ -10,7 +10,7 @@
 
     <logger name="com.sandbox" level="debug" />
 
-    <logger name="io.micronaut" level="error" />
+    <logger name="io.micronaut" level="trace" />
 
     <root level="warn">
         <appender-ref ref="STDOUT" />
