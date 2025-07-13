@@ -14,7 +14,8 @@ class ApiClient(private val httpClient: HttpClient) {
 
     suspend fun makeCall(url: String): String {
         return try {
-            withTimeout(3) {
+            log.debug("Starting API call to $url")
+            withTimeout(10000) {
                 val request = HttpRequest.GET<Any>(url).headers(headers)
                 val response = httpClient.exchange(request, ByteArray::class.java).awaitSingle()
                 val contentType = response.contentType.orElse(null)
@@ -29,7 +30,7 @@ class ApiClient(private val httpClient: HttpClient) {
                 extractData(htmlContent, url)
             }
         } catch (e: Exception) {
-            log.error("Failed to make API call: $url", e)
+            //log.error("Failed to make API call: $url", e)
             throw  e
         }
     }

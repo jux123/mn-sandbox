@@ -44,6 +44,11 @@ dependencies {
     ksp("io.micronaut.openapi:micronaut-openapi")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
 
+    // Metrics and monitoring
+    implementation("io.micronaut.micrometer:micronaut-micrometer-core:5.12.0")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus:5.12.0")
+    implementation("io.micronaut:micronaut-management")
+
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")

@@ -9,6 +9,21 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
+  environment:
+    active: dev
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+
+endpoints:
+  metrics:
+    enabled: true
+    sensitive: false
+  prometheus:
+    enabled: true
+    sensitive: false
 
 aws:
   region: eu-north-1

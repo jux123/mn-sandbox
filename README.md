@@ -60,6 +60,20 @@ export AWS_SECRET_ACCESS_KEY="0/Ao/PqR..."
 export AWS_SESSION_TOKEN="IQoJb3..."
 ```
 
+## Prometheus metrics
+http://localhost:8080/metrics
+http://localhost:8080/prometheus
+
+## Visualize Prometheus metrics with Metricat
+https://metricat.dev/
+
+
+## Monitoring with VisualVM
+```declarative
+sudo apt install default-jre-headless visualvm
+```
+run visualvm and open the java process and see the collected metrics
+
 
 ## Micronaut 4.8.2 Documentation
 

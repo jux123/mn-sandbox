@@ -5,6 +5,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import kotlin.random.Random
 
 @Controller("/hello")
 class TestController(
@@ -16,6 +17,7 @@ class TestController(
     @Get
     suspend fun test(): String {
         log.info("Testing API call...")
-        return apiClient.makeCall("https://www.google.com/")
+        val url = "https://snactions.nazk.gov.ua/en/api/v4/person/"
+        return apiClient.makeCall(url + Random.nextInt(100, 999))
     }
 }
