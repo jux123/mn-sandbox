@@ -64,6 +64,9 @@ export AWS_SESSION_TOKEN="IQoJb3..."
 http://localhost:8080/metrics
 http://localhost:8080/prometheus
 
+Example usage
+`curl http://localhost:8080/prometheus | grep jvm_memory_used`
+
 ## Visualize Prometheus metrics with Metricat
 https://metricat.dev/
 

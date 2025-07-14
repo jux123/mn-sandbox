@@ -17,7 +17,9 @@ class TestController(
     @Get
     suspend fun test(): String {
         log.info("Testing API call...")
-        val url = "https://snactions.nazk.gov.ua/en/api/v4/person/"
-        return apiClient.makeCall(url + Random.nextInt(100, 999))
+        val urls = listOf(
+            "https://snactions.nazk.gov.ua/en/api/v4/person/" + Random.nextInt(100, 999),
+            "https://webgate.ec.europa.eu/fsd/fsf/")
+        return apiClient.makeCall(urls[1])
     }
 }
