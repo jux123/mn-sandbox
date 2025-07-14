@@ -16,6 +16,14 @@ micronaut:
     export:
       prometheus:
         enabled: true
+  http:
+    client:
+      read-timeout: 3s
+    services:
+      hubspot:
+        url: https://api.hubspot.com
+        connect-timeout: 2s
+        read-timeout: 2s
 
 endpoints:
   metrics:
@@ -27,3 +35,8 @@ endpoints:
 
 aws:
   region: eu-north-1
+
+
+hubspot:
+  access-token: ${TOKEN_FROM_HUBSPOT_API}
+  api-url: https://api.hubspot.com
