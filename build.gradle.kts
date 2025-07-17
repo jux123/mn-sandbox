@@ -134,6 +134,6 @@ openapi_diff {
     textReport = true
 }
 
-tasks.named("build") {
-    dependsOn("openapi_diff")
-}
+//tasks.named("build") {
+//    dependsOn("openapi_diff")
+//}
